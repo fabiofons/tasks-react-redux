@@ -20,7 +20,8 @@ class App extends Component {
 
   trackInput(event){
     this.setState({
-      newTask : event.target.value
+      newTask : event.target.value,
+      error : false
     })
   }
 
