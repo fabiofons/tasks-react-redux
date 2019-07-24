@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import store from './store'
 /// Modifica el componente para que se puedan agregar tareas, tachar y destacharlas y error de validacion en el input
 
 class App extends Component {
@@ -7,13 +7,21 @@ class App extends Component {
     super()
     this.state = {
       tasks: [
-        { id: 1, name: "Sacar la ropa", done: false },
-        { id: 2, name: "Hacer la cama", done: true },
-        { id: 3, name: "Leer un rato", done: false }
+        // { id: 1, name: "Sacar la ropa", done: false },
+        // { id: 2, name: "Hacer la cama", done: true },
+        // { id: 3, name: "Leer un rato", done: false }
       ],
       newTask: '',
       error : false
     }
+
+    store.subscribe(() => {
+      this.setState({
+        tasks: store.getState().tasks,
+        newTask: store.getState().newTask
+      })
+    })    
+
     this.trackInput = this.trackInput.bind(this);
     this.addTask = this.addTask.bind(this);
   }
@@ -28,15 +36,14 @@ class App extends Component {
   addTask(event){
     event.preventDefault();
     if(this.state.newTask.length > 1){
-      this.setState({
-        tasks : this.state.tasks.concat(
-          {
-            name : this.state.newTask,
-            done : false
-          }
-        ),
+      const task = {
+        name : this.state.newTask,
+        done : false 
+      };
+      store.dispatch({
+        type:'NEW_TASK',
+        task,
         newTask : "",
-        error : false
       })
     } else {
       this.setState({
