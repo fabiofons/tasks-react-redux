@@ -43,6 +43,6 @@ input[type=text] {
 }
 
 .error {
-  border-color: #ff0000 !important;
+  border: 2px solid #ff0000 !important;
 }
 
